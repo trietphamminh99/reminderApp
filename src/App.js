@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
+import ReminderList from './Components/ReminderList';
+import { useState } from 'react';
+import {nanoid} from 'nanoid';
 
 function App() {
+  const [reminders, setReminders] = useState([
+    {
+      id: nanoid(),
+      text: 'Buy groceries',
+      reminder: '14/2/2023',
+      date: '2/25/2023'
+    }
+  ]);
+
+  function handleAddReminder(text, reminder) {
+    const date = new Date();
+    const newReminder = {
+      id: nanoid(),
+      text: text,
+      reminder:reminder,
+      date: date.toLocaleDateString()
+    };
+    setReminders([...reminders, newReminder]);
+  }
+  function DeleteReminder(id){
+    const newReminders=reminders.filter((note) => note.id !==id);
+    setReminders(newReminders);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar/>
+      <ReminderList reminders={reminders} handleAddReminder={handleAddReminder} handleDeleteReminder={DeleteReminder}/>
+      <Footer/>
     </div>
   );
 }

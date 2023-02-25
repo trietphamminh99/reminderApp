@@ -11,3 +11,59 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.reminder{
+  background-color: #fef68a;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 1rem;
+  min-height: 170px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+.reminder-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+.reminder-list{
+  display:grid;
+  grid-gap:1rem;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+}
+.container{
+  max-width: 960px;
+  margin-right:auto;
+  margin-left: auto;
+  padding-right:15px;
+  padding-left: 15px;
+
+}
+
+.reminder.new{
+  background-color: aquamarine;
+
+}
+textarea{
+  border: none;
+  resize: none;
+  background-color: aquamarine;
+}
+textarea:focus{
+  outline:none;
+}
+.save{
+  background-color: azure;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+}
+.save:hover{
+  background-color: aliceblue;
+  cursor: pointer;
+}
+.reminder.new > p{
+  margin: 0;
+ 
+}

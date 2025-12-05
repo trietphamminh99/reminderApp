@@ -1,40 +1,49 @@
-
 import './App.css';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import ReminderList from './Components/ReminderList';
-import { useState } from 'react';
-import {nanoid} from 'nanoid';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 function App() {
-  const [reminders, setReminders] = useState([
-    {
-      id: nanoid(),
-      text: 'Buy groceries',
-      reminder: '14/2/2023',
-      date: '2/25/2023'
-    }
-  ]);
+  const [reminders, setReminders] = useState([]);
 
-  function handleAddReminder(text, reminder) {
-    const date = new Date();
-    const newReminder = {
-      id: nanoid(),
-      text: text,
-      reminder:reminder,
-      date: date.toLocaleDateString()
-    };
-    setReminders([...reminders, newReminder]);
+  // Load reminders from backend
+  useEffect(() => {
+    axios.get("http://localhost:3000/notes")
+      .then(res => setReminders(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  // Add a new reminder
+  function handleAddReminder(title, note, date) {
+    const newReminder = { title, note, date };
+
+    axios.post("http://localhost:3000/notes", newReminder)
+      .then(res => {
+        setReminders([...reminders, res.data]); // backend returns saved object with _id
+      })
+      .catch(err => console.error(err));
   }
-  function DeleteReminder(id){
-    const newReminders=reminders.filter((note) => note.id !==id);
-    setReminders(newReminders);
+
+  // Delete a reminder
+  function handleDeleteReminder(id) {
+    axios.delete(`http://localhost:3000/notes/${id}`)
+      .then(() => {
+        setReminders(reminders.filter(reminder => reminder._id !== id));
+      })
+      .catch(err => console.error(err));
   }
+
   return (
     <div className="App">
-      <Navbar/>
-      <ReminderList reminders={reminders} handleAddReminder={handleAddReminder} handleDeleteReminder={DeleteReminder}/>
-      <Footer/>
+      <Navbar />
+      <ReminderList 
+        reminders={reminders} 
+        handleAddReminder={handleAddReminder} 
+        handleDeleteReminder={handleDeleteReminder}
+      />
+      <Footer />
     </div>
   );
 }

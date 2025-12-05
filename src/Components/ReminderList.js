@@ -1,5 +1,4 @@
 import Reminder from "./Reminder";
-import React from "react"
 import AddReminder from "./AddNote";
 
 
@@ -8,8 +7,8 @@ export default function ReminderList({reminders,handleAddReminder,handleDeleteRe
         <div className="reminder-list">
             {reminders.map((reminder)=>
              <Reminder 
-             id={reminder.id} 
-             key={reminder.id}
+             id={reminder._id} 
+             key={reminder._id}
              reminder={reminder}
              handleDeleteReminder = {handleDeleteReminder}
            />

@@ -1,45 +1,43 @@
-import { useState } from "react"
+import { useState } from "react";
 
-export default function AddReminder({handleAddReminder}){
-    const [reminderText, setNoteText] = useState('');
-    const [reminder, setDateText] = useState('');
-    
-    function handleNoteChange(event){
-        setNoteText(event.target.value);
-        
-    }
-    
-    function handleDateChange(event){
-        setDateText(event.target.value);
-        
-    }
-    
-    const handleSaveClick = () => {
-        handleAddReminder(reminderText, reminder);
-    }
-    
-    return (
-        <div className='reminder new'>
-            <textarea 
-                rows='1'
-                cols='10'
-                placeholder='Type to add a note...'
-                value={reminderText}
-                onChange={handleNoteChange}
-            ></textarea>
-            
-            <textarea 
-                rows='8'
-                cols='2'
-                placeholder='Type to add a time and date...'
-                value={reminder}
-                onChange={handleDateChange}
-            ></textarea>
-            <p>---------------------</p>
-            <div className='reminder-footer'>
-                <small>Reminder Created Date</small>
-                <button className='save' onClick={handleSaveClick}>save</button>
-            </div>
-        </div>
-    )
+export default function AddReminder({ handleAddReminder }) {
+  const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
+  const [date, setDate] = useState("");
+
+  const handleSaveClick = () => {
+    if (!title || !note || !date) return; // simple validation
+    handleAddReminder(title, note, date);
+    setTitle("");
+    setNote("");
+    setDate("");
+  };
+
+  return (
+    <div className="reminder new">
+      <textarea
+        rows="1"
+        placeholder="Title..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        rows="4"
+        placeholder="Note..."
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+      />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <p>---------------------</p>
+      <div className="reminder-footer">
+        <button className="save" onClick={handleSaveClick}>
+          Save
+        </button>
+      </div>
+    </div>
+  );
 }

@@ -5,12 +5,14 @@ import ReminderList from './Components/ReminderList';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
+const BASE_URL = "https://triet-backend.do2506.click";
+
 function App() {
   const [reminders, setReminders] = useState([]);
 
   // Load reminders from backend
   useEffect(() => {
-    axios.get("http://localhost:3000/notes")
+    axios.get(`${BASE_URL}/notes`)
       .then(res => setReminders(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -19,7 +21,7 @@ function App() {
   function handleAddReminder(title, note, date) {
     const newReminder = { title, note, date };
 
-    axios.post("http://localhost:3000/notes", newReminder)
+    axios.post(`${BASE_URL}/notes`, newReminder)
       .then(res => {
         setReminders([...reminders, res.data]); // backend returns saved object with _id
       })
@@ -28,7 +30,7 @@ function App() {
 
   // Delete a reminder
   function handleDeleteReminder(id) {
-    axios.delete(`http://localhost:3000/notes/${id}`)
+    axios.delete(`${BASE_URL}/notes/${id}`)
       .then(() => {
         setReminders(reminders.filter(reminder => reminder._id !== id));
       })
@@ -38,9 +40,9 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <ReminderList 
-        reminders={reminders} 
-        handleAddReminder={handleAddReminder} 
+      <ReminderList
+        reminders={reminders}
+        handleAddReminder={handleAddReminder}
         handleDeleteReminder={handleDeleteReminder}
       />
       <Footer />

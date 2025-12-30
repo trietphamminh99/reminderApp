@@ -50,8 +50,8 @@ securityContext: {}
   # runAsUser: 1000
 
 
-backend:
-  url: "https://triet-backend.do2506.click"
+# backend:
+#   url: "http://backend-mongo-triet-helm-chart.backend-mongo.svc.cluster.local:3000"
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
@@ -70,7 +70,7 @@ ingress:
     # Báo cho controller biết đây là Ingress cho ALB
     kubernetes.io/ingress.class: alb 
     # Đặt tên nhóm chung, ví dụ: "do2506-group"
-    alb.ingress.kubernetes.io/group.name: alb-do2506-group 
+    alb.ingress.kubernetes.io/group.name: alb-frontend 
     # Cấu hình ALB là internet-facing (hoặc internal nếu bạn muốn nội bộ)
     alb.ingress.kubernetes.io/scheme: internet-facing
     # Sử dụng IP target type (hiệu quả hơn, yêu cầu AWS CNI): ip or instance
